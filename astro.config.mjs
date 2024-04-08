@@ -64,7 +64,7 @@ export default defineConfig({
 						},
 						{
 							label: 'Clase 6',
-							collapsed: true,
+							collapsed: false,
 							autogenerate: { directory: 'clases/clase-6' },
 						},
 						{
