@@ -1,0 +1,53 @@
+---
+title: 'Taller Arduino: comunicación serie y OSC (parte 2): Arduino, Live y Resolume'
+description: 'Taller Arduino: comunicación serie y OSC (parte 2): Arduino, Live y Resolume'
+sidebar:
+  order: 1
+  hidden: false
+---
+
+import { Icon } from '@astrojs/starlight/components';
+
+## Envío de datos de Arduino a Ableton Live Archivo Editar título 277.9KB `.pdf`
+
+Ejemplo de envío de datos de Arduino a Ableton Live a través del puerto serie.
+
+Ejemplo de recepción de datos de Arduino en Max for Live, por puerto Serie,. Desde allí mismo los asignamos a los diferentes controles del IDE, también llamados Live Objects (volume, panning, sends, etc.).
+
+```
+Arduino <SERIE> MaxForLive <> IDE de Live
+```
+
+## Ejemplo de Max4Live v.2 Archivo Editar título 48.8KB
+
+Este ejemplo contiene un patch de Max4Live que tiene los mensajes necesarios para:
+
+- control de parámetros de efectos
+- reproducción de clips
+- muteo/desmuteo de tracks
+
+## Envío de datos de Arduino a Resolume Archivo Editar título 51.3KB
+
+Ejemplo de comunicación entre Arduino, Processing y Resolume a través de puertos Serie y OSC.
+
+Arduino envía sus datos a la computadora por el puerto Serie. Pero Resolume esta preparado para recibir datos del teclado de  la computadora, del puerto MIDI ó de un puerto OSC (no del puerto Serie). Por esta razón, utilizamos Processing para recibir los datos del puerto Serie y reenviarlos a un puerto OSC, para que puedan ser recibidos por Resolume.
+
+**Arduino** < SERIE > **Processing** < OSC > **Resolume**
+
+## Ejemplos de comunicación Serie y OSC
+
+En este video vemos un ejemplo de cómo enviar datos desde un controller hecho con Arduino a Ableton Live (comunicación Serie, via Max For Live):
+
+04 Comunicación Arduino+AbletonLive (Serie).mp4 `VIDEO`
+
+En este video vemos un ejemplo de cómo enviar datos desde un controller hecho con Arduino a Resolume (comunicación Serie + OSC, via Processing):
+
+05 Comunicación Arduino+Processing+Resolume (Serie+OSC).mp4 `VIDEO`
+
+## TouchOSC.zip Archivo Editar título 5.5MB
+
+## La próxima clase (miércoles 20 de septiembre, 18.30hs) será en modalidad remota, vía ZOOM:
+
+- Tendremos la entrega de la **INSTANCIA OBLIGATORIA Nro.4 - Parte 2: PROYECTO COMPLETO** para el **TPF: OBRA MULTIMEDIA**.
+- El enlace de ZOOM se compartirá ese mismo dia entre las 18 y las 18:30, cuando pongamos visible la clase.
+

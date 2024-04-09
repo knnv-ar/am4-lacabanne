@@ -1,0 +1,56 @@
+---
+title: 'Taller Arduino: comunicación serie y OSC (parte 1): Arduino, Processing y Pure Data'
+description: 'Taller Arduino: comunicación serie y OSC (parte 1): Arduino, Processing y Pure Data'
+sidebar:
+  order: 1
+  hidden: false
+---
+
+import { Icon } from '@astrojs/starlight/components';
+
+## Arduino - Comunicación serie Archivo 2.1MB `.pdf`
+
+Historia y teoría para entender que es el puerto serie, mediante el cual Arduino envía y/o recibe datos de otros programas.
+
+## Envío de datos de Arduino a Processing Archivo 121KB `.pdf`
+
+Ejemplo de envío de datos de Arduino a Processing a través del puerto serie.
+
+## Envío de datos de Arduino a Pure Data Archivo 121.5KB `.pdf`
+
+Ejemplo de envío de datos de Arduino a Pure Data a través del puerto serie.
+
+NOTA: Este ejemplo requiere de algunas librerias de PD. En caso de utilizar PD-extended o PD-L2Ork, ya vienen instaladas. En caso de utilizar PD-vanilla, se deberán instalar manualmente.
+
+## Envío de datos de Processing a Arduino Archivo 117.8KB `.pdf`
+
+Ejemplo de envío de datos de Processing a Arduino a través del puerto serie.
+
+## Envío de datos de Pure Data a Arduino Archivo 117.8KB `.pdf`
+
+Ejemplo de envío de datos de Pure Data a Arduino a través del puerto serie.
+
+NOTA: Este ejemplo requiere de algunas librerias de PD. En caso de utilizar PD-extended o PD-L2Ork, ya vienen instaladas. En caso de utilizar PD-vanilla, se deberán instalar manualmente.
+
+## Envío de datos entre Arduino, Processing y Pure Data Archivo 93.1KB `.pdf`
+
+Ejemplo de comunicación entre Arduino, Processing y Pure Data a través de puertos Serie y OSC.
+
+Arduino puede conectarse a través del puerto serie con un sólo programa a la vez (Processing o PD, por ejemplo). Si para un proyecto necesitamos comunicar los 3, sumamos a la cadena el 3er programa a través de OSC. Recomendamos conectarlos del siguiente modo:
+
+**Arduino** < SERIE > **Processing** < OSC > **PD**
+
+Ver "Arduino - Comunicacion Serie.pdf" (página 14).
+
+NOTA: Este ejemplo requiere de algunas librerias de PD. En caso de utilizar PD-extended o PD-L2Ork, ya vienen instaladas. En caso de utilizar PD-vanilla, se deberán instalar manualmente.
+
+## Ejemplos de comunicación Serie y OSC
+
+En este video probamos algunos de los ejemplos de comunicación Serie y OSC, entre Arduino, Processing y Pure Data:
+
+02 Comunicación Arduino+Processing+PD (Serie+OSC).mp4 `VIDEO`
+
+En este video vemos el ejemplo de una interfaz hecha con Arduino, pensada para ser usada como un controller:
+
+03 Ejemplo de controller hecho con Arduino.mp4 `VIDEO`
+
