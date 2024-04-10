@@ -192,11 +192,6 @@ export default defineConfig({
 							collapsed: true,
 							autogenerate: { directory: 'clases/clase-31' },
 						},
-						{
-							label: 'Clase 32',
-							collapsed: true,
-							autogenerate: { directory: 'clases/clase-32' },
-						},
 					],
 				},
 				/*
