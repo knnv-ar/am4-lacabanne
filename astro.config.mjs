@@ -23,10 +23,17 @@ export default defineConfig({
 			},
 			sidebar: [
 				{
+					label: 'Cursadas Anteriores',
+					collapsed: false,
+					items: [
+						{ label: 'Videos', link: '/cursadas_anteriores/videos/' },
+					],
+				},
+/* 				{
 					label: 'Organización',
 					items: [
 						// Each item here is one entry in the navigation menu.
-						{ label: 'Plan de trabajo', link: '/organizacion/plan-de-trabajo/' },
+						// { label: 'Plan de trabajo', link: '/organizacion/plan-de-trabajo/' },
 						{ label: 'Bibliografía', link: '/organizacion/bibliografia/', badge: { text: 'revisión', variant: 'caution' } },
 						{ label: 'Audiotextos', link: '/organizacion/audiotextos/', badge: { text: 'revisión', variant: 'caution' } },
 					],
@@ -48,8 +55,7 @@ export default defineConfig({
 						{
 							label: 'Clase 3',
 							collapsed: false,
-							autogenerate: { directory: 'clases/clase-3' },
-							/*badge: 'Nuevo',*/
+							autogenerate: { directory: 'clases/clase-3' },							
 							badge: { text: 'nuevo', variant: 'default' },
 						},
 						{
@@ -193,7 +199,7 @@ export default defineConfig({
 							autogenerate: { directory: 'clases/clase-31' },
 						},
 					],
-				},
+				}, */
 				/*
 				{
 					label: 'Acciones de Consolidación de Saberes (ACSs)',
