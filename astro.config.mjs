@@ -23,6 +23,10 @@ export default defineConfig({
 			},
 			sidebar: [
 				{
+					label: 'Godot Engine',
+					autogenerate: { directory: 'godot-engine' },
+				},
+				{
 					label: 'Cursadas Anteriores',
 					collapsed: false,
 					items: [
