@@ -1,0 +1,259 @@
+---
+title: 'Capítulo 5: De la v4.3 a la v4.7.2'
+description: 'Capítulo 5: Qué cambió en Godot Engine desde la v4.3 y cómo seguir los capítulos anteriores con la versión actual'
+sidebar:
+  order: 5
+  hidden: false
+---
+
+Los capítulos 1 a 4 de este apunte fueron escritos y capturados con **Godot Engine v4.3** (agosto de 2024). Desde entonces el motor tuvo cuatro versiones menores y, al día de hoy, la última versión estable descargable es la **v4.7.2** (agosto de 2026).
+
+La buena noticia es que **todo el código GDScript de los capítulos 2, 3 y 4 sigue funcionando sin cambios**: la rama 4.x mantiene compatibilidad y ninguno de los nodos, métodos o señales que usamos en esos tutoriales fue renombrado ni eliminado. Lo que sí cambió bastante es **la interfaz del editor**, así que varias capturas de pantalla ya no coinciden con lo que vas a ver al abrir Godot.
+
+Este capítulo es una guía práctica de esas diferencias. No pretende ser un listado exhaustivo de todo lo que cambió en el motor (para eso están las notas de cada versión, enlazadas al final), sino responder a una pregunta concreta: **¿qué necesito saber para hacer los capítulos 1 a 4 teniendo instalada la v4.7.2?**
+
+- [Línea de tiempo de versiones](#línea-de-tiempo-de-versiones)
+- [Cambios que afectan al Capítulo 1](#cambios-que-afectan-al-capítulo-1-la-interfaz)
+- [Cambios que afectan al Capítulo 2](#cambios-que-afectan-al-capítulo-2-scripting)
+- [Cambios que afectan al Capítulo 3](#cambios-que-afectan-al-capítulo-3-juego-2d)
+- [Cambios que afectan al Capítulo 4](#cambios-que-afectan-al-capítulo-4-juego-3d)
+- [Cómo actualizar un proyecto hecho en 4.3](#cómo-actualizar-un-proyecto-hecho-en-43)
+- [Otras novedades destacadas](#otras-novedades-destacadas-43--472)
+
+### Línea de tiempo de versiones
+
+| Versión | Fecha | Titular de la versión |
+| --- | --- | --- |
+| 4.3 | 15/08/2024 | Versión con la que se escribieron los capítulos 1 a 4 |
+| 4.4 | 03/03/2025 | Física Jolt, ventana de juego embebida, archivos UID |
+| 4.5 | 15/09/2025 | Stencil buffer, lector de pantalla, *shader baker* |
+| 4.6 | 26/01/2026 | Tema "Modern" del editor, docks movibles, Jolt por defecto |
+| 4.7 | 18/06/2026 | AreaLight3D, salida HDR, Asset Store integrada |
+| **4.7.2** | **18/08/2026** | **Última versión estable (mantenimiento)** |
+
+> **Nota:** Godot publica versiones de mantenimiento (4.7.1, 4.7.2, etc.) que sólo corrigen errores y **no** agregan funciones nuevas ni rompen compatibilidad. Siempre conviene usar la última de la serie: hoy, la 4.7.2.
+
+> **Nota:** Godot se distribuye en dos ediciones. La edición **estándar** trae GDScript y C++; la edición **.NET** agrega C#. Si vas a trabajar sólo con GDScript —que es lo que hacemos en este apunte— descargá la estándar.
+
+### Cambios que afectan al Capítulo 1 (la interfaz)
+
+El Capítulo 1 describe la interfaz del editor con capturas de la v4.3. Es la parte más desactualizada del apunte, porque entre la 4.4 y la 4.7 el editor se rediseñó. Lo que se explica sigue siendo válido conceptualmente —los cuatro paneles principales, los docks, el inspector—, pero la apariencia cambió.
+
+#### El tema "Modern" es el nuevo aspecto por defecto (4.6)
+
+Al abrir Godot 4.7 vas a encontrarte con un editor visualmente distinto al de las capturas: bordes más suaves, menos líneas divisorias, iconografía retocada y mejor legibilidad general. Ese es el tema **Modern**, que en la v4.6 pasó a ser el tema por defecto.
+
+El tema anterior sigue disponible: `Editor > Editor Settings > Interface > Theme > Preset`, y elegí `Classic`. Si estás siguiendo el Capítulo 1 y querés que la pantalla se parezca a las capturas, este es el atajo más directo.
+
+#### Los docks ahora se pueden mover y flotar (4.6)
+
+En la 4.3 los paneles (`Scene`, `FileSystem`, `Inspector`, `Node`) tenían posiciones fijas a izquierda y derecha. Desde la 4.6 el sistema de docks es unificado: podés **arrastrar cualquier panel** a cualquiera de los laterales o a la zona inferior, y también **desprenderlo como ventana flotante**.
+
+Esto es útil, pero también significa que si movés algo sin querer, tu editor deja de parecerse a las capturas. Para volver al punto de partida: `Editor > Editor Settings`, botón de los tres puntos, `Reset to Defaults`; o bien `Editor > Editor Layout > Default`.
+
+#### La pestaña `AssetLib` ahora es la Asset Store (4.7)
+
+El Capítulo 1 menciona cuatro pantallas principales: `2D`, `3D`, `Script` y `AssetLib`. En la v4.7 la vieja **Asset Library** fue reemplazada por la nueva **Godot Asset Store**, integrada en el editor y publicada en [store.godotengine.org](https://store.godotengine.org/).
+
+La Asset Library original sigue en línea para dar soporte a versiones viejas del motor, pero está discontinuada y pasará a ser un repositorio de sólo lectura. La tienda nueva agrega cuentas de usuario, reseñas, versiones múltiples por recurso y changelogs.
+
+#### El `Project Manager` cambió de detalles
+
+Sigue funcionando igual —crear, importar, abrir, escanear proyectos— pero se agregaron algunas cosas útiles:
+
+- **Duplicar un proyecto** (4.5): permite hacer una copia de respaldo antes de actualizar la versión del motor. El editor incluso te lo ofrece cuando detecta que estás por abrir un proyecto hecho con una versión anterior.
+- **Indicador de discrepancia de versión** (4.7): el Project Manager avisa visualmente cuando un proyecto fue creado con otra versión de Godot.
+
+#### El diálogo de creación de proyecto
+
+Los tres renderizadores siguen siendo los mismos: `Forward+`, `Mobile` y `Compatibility`. La diferencia práctica es que en Windows, desde la v4.6, los proyectos nuevos usan **Direct3D 12** como driver por defecto en lugar de Vulkan. No cambia nada de lo que hacemos en estos tutoriales, pero explica por qué el proyecto puede reportar un driver distinto al de las capturas.
+
+> **Nota:** Si al crear el proyecto ves un cartel sobre el gestor de versiones (`Version Control Metadata`), dejalo en `None` salvo que sepas que vas a usar Git.
+
+### Cambios que afectan al Capítulo 2 (scripting)
+
+#### El juego ahora se ejecuta *dentro* del editor (4.4)
+
+Este es el cambio más notorio del día a día. En la v4.3, al presionar `F5` (ejecutar proyecto) o `F6` (ejecutar escena), se abría una ventana separada del sistema operativo. Desde la v4.4 la ventana del juego aparece **embebida dentro del editor**, en la zona del viewport.
+
+El juego sigue corriendo como un proceso independiente —no es una simulación—, pero al estar embebido podés:
+
+- ver el editor y el juego al mismo tiempo, sin cambiar de ventana;
+- pausar el juego y **hacer clic sobre los elementos de la escena en ejecución** para inspeccionarlos y moverlos;
+- mover la cámara mientras el juego corre.
+
+Si preferís el comportamiento anterior, hay un botón en la barra superior del juego embebido para desacoplarlo, o podés desactivarlo permanentemente en `Editor > Editor Settings > Run > Window Placement > Game Embed Mode`.
+
+> **Nota:** La edición interactiva en vivo es una herramienta de depuración excelente para el Capítulo 3 y el Capítulo 4: podés pausar el juego, arrastrar un enemigo y ver qué pasa cuando lo soltás.
+
+#### Aparecen archivos `.uid` junto a los scripts (4.4)
+
+Al crear tu primer script vas a notar que en el panel `FileSystem` aparece —o al menos existe en el disco— un archivo extra: junto a `sprite_2d.gd` hay un `sprite_2d.gd.uid`.
+
+No es basura ni un error. Desde la v4.4 Godot le asigna a cada script y shader un **identificador único** (UID), guardado en ese archivo. Sirve para que las referencias entre archivos no se rompan cuando movés o renombrás cosas dentro del proyecto: en lugar de depender de la ruta `res://…`, la escena guarda un `uid://…`.
+
+Tres reglas prácticas:
+
+1. **No los borres** ni los edites a mano.
+2. Si usás Git, **no los pongas en el `.gitignore`**: tienen que viajar con el proyecto.
+3. Si copiás un script de un proyecto a otro, copiá también su `.uid` o dejá que Godot regenere uno nuevo.
+
+#### Ayudas nuevas al escribir código
+
+Ninguna de estas es obligatoria, pero facilitan bastante seguir el capítulo:
+
+- **Tooltips en GDScript** (4.4): pasando el cursor sobre una función, variable o clase aparece su documentación, sin necesidad de abrir la referencia integrada.
+- **Evaluador de expresiones** (4.4): una pestaña tipo consola en el depurador para probar expresiones cuando el juego está detenido en un breakpoint.
+- **Botón `Step Out`** en el depurador (4.6): salir de la función actual de un salto.
+- **Selector de color en el script** (4.5): las constantes `Color` muestran una muestra de color al lado, editable en línea.
+- **Resaltado de marcadores de formato** (4.6): en cadenas como `"Puntos: %s"`, el `%s` se resalta visualmente.
+- **Vista previa de shaders en línea** (4.7).
+
+#### Señales: el nodo emisor puede llegar como parámetro (4.5)
+
+En el apartado "Uso de señales" conectamos señales desde el editor. Desde la v4.5, al conectar una señal el diálogo ofrece **agregar automáticamente el nodo emisor** como parámetro extra del callback. Es útil cuando varios nodos conectan a la misma función y necesitás saber cuál la disparó. Si no lo activás, el comportamiento es idéntico al del capítulo.
+
+#### Novedades del lenguaje GDScript (no usadas en el apunte)
+
+Si ya venís programando, estas incorporaciones te pueden interesar. Nada de esto es necesario para los tutoriales:
+
+- **Diccionarios tipados** (4.4): `var puntajes: Dictionary[String, int] = {}`.
+- **Clases y métodos abstractos** (4.5): con la anotación `@abstract` se puede impedir instanciar una clase base y obligar a las derivadas a implementar un método.
+- **Argumentos variádicos** (4.5): funciones que aceptan una cantidad arbitraria de parámetros.
+- **Botones en el Inspector** (4.4): la anotación `@export_tool_button` agrega un botón que ejecuta una función de un script `@tool`.
+- **`Tween.tween_await()`** (4.7): pausar una secuencia de animación hasta que se emita una señal.
+
+#### Sobre C#
+
+El capítulo compara GDScript, C# y C++. Ese análisis sigue vigente, con dos actualizaciones:
+
+- Desde la v4.4, la edición .NET requiere **.NET 8.0 como mínimo** y **C# funciona en todas las ABI de Android**.
+- El soporte de C# por plataforma sigue evolucionando y no es idéntico al de GDScript. Si vas a exportar a web o a móviles con C#, verificá antes el estado en la documentación oficial.
+
+Para lo que hacemos en la cátedra, **GDScript sigue siendo la recomendación**.
+
+### Cambios que afectan al Capítulo 3 (juego 2D)
+
+El tutorial de *Dodge the Creeps* se puede seguir **paso por paso sin ninguna modificación**. Todos los nodos que usa (`Area2D`, `AnimatedSprite2D`, `CollisionShape2D`, `RigidBody2D`, `Path2D`, `PathFollow2D`, `Timer`, `CanvasLayer`, `Label`, `Button`) mantienen los mismos nombres, propiedades y señales.
+
+Las diferencias son de comodidad:
+
+- **Ventana de juego embebida**: al probar la escena, el juego aparece dentro del editor (ver más arriba).
+- **Ajuste a superficies y guías**: el editor 2D ganó una herramienta de **pincel de escenas** (*scene painter*, 4.7) para colocar instancias repetidas, útil si querés poblar el fondo.
+- **Física de TileMap por chunks** (4.5): si extendés el juego con un `TileMapLayer`, las formas de colisión de las celdas ahora se fusionan en formas más grandes, con mejor rendimiento.
+- **Colisión de una sola dirección configurable** en `CollisionShape2D` (4.7): sirve para plataformas atravesables.
+- **Gradientes cónicos** en `GradientTexture2D` (4.7).
+
+> **Nota:** En el apartado final, "Compartir el juego terminado con otros", el flujo de exportación no cambió. Sí cambió el ecosistema de recursos: si buscás plugins o assets, ahora es en la **Asset Store**.
+
+### Cambios que afectan al Capítulo 4 (juego 3D)
+
+*Squash the Creeps* también se puede seguir tal cual está escrito. El código de `CharacterBody3D` con `move_and_slide()`, las capas físicas, el `Area3D` de la hitbox y el `AnimationPlayer` funcionan igual. Hay, eso sí, un cambio de fondo importante.
+
+#### Jolt es ahora el motor de física 3D por defecto (4.4 y 4.6)
+
+En la v4.4 se integró **Jolt Physics** como alternativa al motor de física interno (Godot Physics), en estado experimental. En la v4.6 se le quitó la etiqueta de experimental y pasó a ser **el motor por defecto para los proyectos 3D nuevos**.
+
+Qué implica para el Capítulo 4:
+
+- Jolt es más rápido y notablemente más estable que Godot Physics, sobre todo con muchos cuerpos rígidos.
+- Para este tutorial **no tenés que hacer nada**: los resultados son equivalentes.
+- Si al ampliar el juego notás diferencias de comportamiento en colisiones o rebotes respecto de lo descripto, podés volver al motor anterior en `Project > Project Settings > Physics > 3D > Physics Engine`.
+- Un proyecto 4.3 que actualices **no** cambia de motor solo: conserva el que tenía configurado.
+
+#### Interpolación física 3D (4.4 y 4.5)
+
+Godot incorporó interpolación física en 3D —equivalente a la que ya existía en 2D— y en la v4.5 se movió al `SceneTree`, donde funciona correctamente con nodos. Sirve para eliminar el micro-tembleque del movimiento en monitores de alta tasa de refresco. Se activa en `Project > Project Settings > Physics > Common > Physics Interpolation`.
+
+#### El editor 3D es más cómodo
+
+- **Modos `Select` y `Transform` separados** (4.6): seleccionar y transformar dejaron de ser la misma acción, lo que reduce mover objetos por accidente.
+- **Cuarto anillo en el gizmo de rotación** (4.6) para rotar sobre el eje de la cámara, y **gizmo tipo trackball** (4.7).
+- **Ajuste a colisionadores y a vértices** (4.4 y 4.7): al colocar un objeto, se apoya sobre la superficie que tiene debajo.
+- **Generar forma de colisión desde la malla** (4.6): un menú directo para crear el `CollisionShape3D` a partir de una malla primitiva.
+- **Regla 3D** (4.7) para medir distancias en la escena.
+- **Seguir un objeto en movimiento** (4.7): presionando `F` dos veces, la cámara del editor sigue al nodo seleccionado mientras el juego corre.
+
+#### Animación de personajes
+
+El capítulo usa `AnimationPlayer` con una animación `float` hecha a mano. Todo eso sigue igual. Alrededor apareció un ecosistema nuevo de animación procedural que puede interesarte para el trabajo final:
+
+- **`LookAtModifier3D`** y **`SpringBoneSimulator3D`** (4.4): apuntado de cabeza y "física de rebote" para huesos secundarios.
+- **`BoneConstraint3D`** con `AimModifier3D`, `CopyTransformModifier3D` y `ConvertTransformModifier3D` (4.5).
+- **Marco completo de cinemática inversa (IK)** (4.6): `IKModifier3D`, `TwoBoneIK3D`, `SplineIK3D`, `FABRIK3D`, `CCDIK3D` y `JacobianIK3D`.
+- **Marcadores de animación** (4.4): subregiones nombradas dentro de una animación, para saltar o repetir tramos sin reproducirla entera.
+
+> **Nota:** Un detalle menor por si importás modelos: desde la v4.6 el valor por defecto de `MeshInstance3D.skeleton` cambió de `NodePath("..")` a `NodePath("")`. Sólo afecta a escenas armadas a mano que dependían del valor viejo.
+
+### Cómo actualizar un proyecto hecho en 4.3
+
+Si tenés un proyecto de una cursada anterior y querés abrirlo con la v4.7.2:
+
+1. **Hacé una copia de respaldo antes de abrirlo.** Es el paso más importante: una vez que un proyecto se abre y se guarda con una versión nueva, no hay vuelta atrás. Podés copiar la carpeta a mano o usar `Duplicate` en el Project Manager.
+2. Abrí el proyecto. Godot va a avisarte que fue creado con otra versión y va a pedirte confirmación para convertirlo.
+3. Dejá que reimporte todos los recursos. La primera apertura puede tardar bastante.
+4. Revisá el panel `Output` y el de errores. Los saltos entre versiones menores generan sobre todo **advertencias de deprecación**, no errores.
+5. Verificá que se hayan generado los archivos `.uid`, y si usás Git, agregalos al repositorio.
+6. Probá el juego completo antes de dar la migración por buena.
+
+> **Nota:** La documentación oficial mantiene una guía de migración por cada salto de versión, con la lista completa de cambios que rompen compatibilidad: [Upgrading from Godot 4.3 to 4.4](https://docs.godotengine.org/en/stable/tutorials/migrating/upgrading_to_godot_4.4.html) y las páginas equivalentes para 4.5, 4.6 y 4.7. Si tu proyecto usa GDExtension, shaders personalizados o navegación, conviene leerlas.
+
+Para proyectos como los de los capítulos 3 y 4 —GDScript, nodos estándar, sin plugins— la migración de 4.3 a 4.7 no suele requerir tocar una sola línea de código.
+
+### Otras novedades destacadas 4.3 → 4.7.2
+
+Un panorama breve de lo que no afecta a los tutoriales pero define hacia dónde va el motor.
+
+#### Render y gráficos
+
+- **Ubershaders** (4.4): shaders precompilados de respaldo que eliminan los tironeos por compilación durante el juego.
+- **Tonemapping AgX** (4.4), con controles de blanco y contraste configurables (4.6).
+- **Backend Metal nativo** para macOS e iOS en Apple Silicon (4.4).
+- **Mejoras de lightmaps** (4.4): muestreo bicúbico, transparencia y *shadowmasks* para combinar sombras estáticas y dinámicas.
+- **Stencil buffer** (4.5) y antialiasing **SMAA 1x** (4.5).
+- **Shader baker** (4.5): precompilación de shaders con reducciones de tiempo de carga de hasta 20x en algunas plataformas.
+- **Rediseño completo de las reflexiones en espacio de pantalla (SSR)** y **sondas de reflexión octaédricas** (4.6).
+- **`AreaLight3D`** (4.7): luces rectangulares con sombras suaves realistas.
+- **Salida HDR** (4.7) en Windows, macOS, iOS, visionOS y Linux (Wayland).
+
+#### Accesibilidad e internacionalización
+
+- **Soporte de lector de pantalla** vía AccessKit (4.5), y **navegación por landmarks** (4.7). Es la primera vez que el motor incorpora accesibilidad de manera nativa: los juegos hechos con Godot pueden ser jugados por personas con discapacidad visual.
+- **Vista previa de traducciones en vivo** dentro del editor (4.5).
+- **Cambio de idioma del editor sin reiniciar** (4.5).
+- **Columnas `?context` y `?plural`** en las traducciones CSV (4.6).
+
+#### Interfaz y entrada
+
+- **`FoldableContainer`** (4.5): contenedor tipo acordeón.
+- **Nodo `VirtualJoystick`** integrado, con tres modos (4.7): joystick en pantalla para dispositivos táctiles, sin necesidad de plugins.
+- **Giroscopio y acelerómetro**, e identificación de dispositivo para teclados y mouse (4.7).
+- **Driver de gamepad SDL3** (4.5), con mejores mapeos.
+
+#### Plataformas
+
+- **Editor en Android y en visores XR** (4.4 y 4.6): Godot corre en tablets, en Meta Quest y en dispositivos Android XR.
+- **Exportación a visionOS** (4.5), primer soporte de plataforma nueva desde la liberación del código.
+- **Wayland nativo** en Linux con subventanas (4.5) y soporte táctil inicial (4.7).
+- **SIMD de WebAssembly** para la exportación web (4.5).
+- **PCKs de parche con codificación delta** (4.6): actualizaciones mucho más chicas.
+- **LibGodot** (4.6): embeber el motor como biblioteca dentro de otra aplicación.
+
+#### Herramientas
+
+- **Compresor de texturas Betsy por GPU** (4.4), con importación 2x más rápida en 4.6.
+- **Biblioteca Manifold para CSG** (4.4): geometría booleana confiable.
+- **Snapshots de ObjectDB** (4.6): detección de fugas de memoria comparando estados.
+- **Perfilado C++** integrado con Tracy, Perfetto e Instruments (4.6).
+- **Editor dedicado de `MeshLibrary`** (4.7).
+
+### Enlaces
+
+- [Descargas de Godot Engine](https://godotengine.org/download)
+- [Notas de la versión 4.4](https://godotengine.org/releases/4.4/)
+- [Notas de la versión 4.5](https://godotengine.org/releases/4.5/)
+- [Notas de la versión 4.6](https://godotengine.org/releases/4.6/)
+- [Notas de la versión 4.7](https://godotengine.org/releases/4.7/)
+- [Guías de migración entre versiones](https://docs.godotengine.org/en/stable/tutorials/migrating/index.html)
+- [Godot Asset Store](https://store.godotengine.org/)
+- [Documentación oficial (estable)](https://docs.godotengine.org/en/stable/)
